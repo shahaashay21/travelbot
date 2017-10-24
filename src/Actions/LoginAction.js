@@ -50,7 +50,7 @@ const loginSuccess = (dispatch, status) => {
         payload: status
     });
     if(status == "success") {
-        Actions.home();
+        Actions.tabbar();
     }
 };
 

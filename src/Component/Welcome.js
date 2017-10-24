@@ -15,7 +15,7 @@ class Welcome extends Component {
             AsyncStorage.getItem(EMAIL).then(value => {
                 if(value != null) {
                     // Actions.home();
-                    Actions.login();
+                    Actions.tabbar();
                 } else {
                     Actions.login();
                 }
