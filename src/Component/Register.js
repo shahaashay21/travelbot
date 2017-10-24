@@ -3,6 +3,7 @@ import { View, Text, Image, ScrollView, Platform, ToastAndroid, Alert } from 're
 import { Icon, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import { TButton, Spinner } from "./Common";
 
@@ -17,10 +18,10 @@ class Register extends Component {
     backIcon(){
         if(Platform.OS === 'ios') {
             return (
-                <Icon
-                    reverse
+                <Ionicons
+                    raised
                     name='ios-arrow-back'
-                    type='ionicon'
+                    type='Ionicons'
                     color='#d9534f'
                     size={36}
                     style={{position: 'absolute', left: 20}}

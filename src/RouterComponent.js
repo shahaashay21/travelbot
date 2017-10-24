@@ -1,6 +1,5 @@
 import React from 'react';
 import { Router, Scene, Stack, ActionConst } from 'react-native-router-flux';
-import { Icon } from 'react-native-elements';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
@@ -14,9 +13,9 @@ import Search from './Component/Search';
 import Trip from './Component/Trip';
 import Profile from './Component/Profile';
 import Notification from './Component/Notification';
+import Settings from './Component/Settings';
 
 const HomeIcon = ({ selected, title }) => {
-    console.log("Selecetion " + {selected});
     return (
         <Octicons
             name='home'
@@ -106,11 +105,12 @@ const RouterComponent = () => {
                         <Scene key="notification" component={ Notification } hideNavBar type={ActionConst.RESET} initial/>
                     </Scene>
 
-                    <Scene key="profile" title="Profile" icon={ProfileIcon}>
+                    <Scene key="profile" title="Profile" icon={ProfileIcon} >
                         <Scene key="profile" component={ Profile } hideNavBar type={ActionConst.RESET} initial/>
                     </Scene>
 
                 </Scene>
+                <Scene key="settings" component={ Settings } hideNavBar back-={true} />
             </Stack>
         </Router>
     );
