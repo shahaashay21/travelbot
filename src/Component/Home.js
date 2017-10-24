@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, AsyncStorage } from 'react-native';
+import { View, AsyncStorage, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { EMAIL } from '../Config/Config';
 
@@ -20,6 +20,7 @@ class Home extends Component {
     render() {
         return (
             <View>
+                <Text>HOME</Text>
             </View>
         );
     }

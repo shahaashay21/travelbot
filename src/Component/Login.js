@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, Image } from 'react-native';
+import { Text, View, Image, Platform, ToastAndroid, Alert } from 'react-native';
 import { connect } from 'react-redux';
-import { FormLabel, FormInput } from 'react-native-elements';
+import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
 import { TButton, Spinner } from './Common';
@@ -27,6 +27,32 @@ class Login extends Component {
 
     onRegister(){
         Actions.register();
+    }
+
+    emailValidation(){
+        if(this.props.email_validation !== ''){
+            return (
+                <FormValidationMessage>{this.props.email_validation}</FormValidationMessage>
+            );
+        }
+    }
+
+    passwordValidation(){
+        if(this.props.password_validation !== ''){
+            return (
+                <FormValidationMessage>{this.props.password_validation}</FormValidationMessage>
+            );
+        }
+    }
+
+    networkError() {
+        if(this.props.auth_error == true){
+            if(Platform.OS !== 'ios'){
+                ToastAndroid.showWithGravity('Network Error!', ToastAndroid.SHORT, ToastAndroid.BOTTOM);
+            } else {
+                Alert.alert('Network Error!');
+            }
+        }
     }
 
     signInProcess() {
@@ -57,7 +83,7 @@ class Login extends Component {
               />
 
               <View style={ heading }>
-                  <Text style={{fontSize: 24, alignSelf: 'center'}}>Social Network For Travelers</Text>
+                  <Text style={{fontSize: 18, alignSelf: 'center'}}>Social Network For Travelers</Text>
               </View>
 
               <View style={loginView}>
@@ -68,6 +94,8 @@ class Login extends Component {
                       onChangeText={this.onEmailChange.bind(this)}
                       value={this.props.email}
                   />
+                  {this.emailValidation()}
+
 
                   <FormLabel style={{marginTop: 5}}>Password</FormLabel>
                   <FormInput
@@ -77,6 +105,7 @@ class Login extends Component {
                       onChangeText={this.onPasswordChange.bind(this)}
                       value={this.props.password}
                   />
+                  {this.passwordValidation()}
 
                   <View style={{alignSelf: 'center', marginTop: 35}}>
                       {this.signInProcess()}
@@ -91,6 +120,7 @@ class Login extends Component {
                       />
                   </View>
               </View>
+              {this.networkError()}
           </View>
         );
     }
@@ -121,8 +151,8 @@ const styles = {
 };
 
 const mapStateToProps = ({ auth }) => {
-    const { email, password, error, loading } = auth;
-    return { email, password, error, loading };
+    const { email, password, auth_error, loading, email_validation, password_validation } = auth;
+    return { email, password, auth_error, loading, email_validation, password_validation };
 };
 
 export default connect(mapStateToProps, { emailChanged, passwordChanged, loginUser })(Login);

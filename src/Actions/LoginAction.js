@@ -1,4 +1,4 @@
-import { EMAIL_CHANGED, PASSWORD_CHANGED, LOGIN_USER_SUCCESS, LOGIN_USER_FAIL, LOGIN_USER, LOGGEDIN } from "./Types";
+import { EMAIL_CHANGED, PASSWORD_CHANGED, LOGIN_USER_SUCCESS, LOGIN_ERROR, LOGIN_EMAIL_INVALID, LOGIN_PASSWORD_INVALID, LOGIN_USER, LOGGEDIN } from "./Types";
 import { AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { URL, EMAIL } from '../Config/Config';
@@ -23,45 +23,39 @@ export const loginUser = (email, password) => {
         dispatch({type: LOGIN_USER});
         const sendData = { email, password };
 
-        const header = {
-            'Accept': 'application/json',
-            'Content-Type': 'application/x-www-form-urlencoded',
-        }
-
-        axios.post(URL+'/users/login', sendData)
+        axios.post(URL+'/users/login', sendData, {
+            timeout: 2000
+        })
         .then(response => {
-            console.log(response);
             response = response.data;
-            if(response == "success" || response == "failed" || response == "not available"){
-                if(response == "success"){
-                    AsyncStorage.setItem(EMAIL, JSON.stringify(email));
-                }
-                loginStatus (dispatch, response);
+            if(response == "success"){
+                AsyncStorage.setItem(EMAIL, JSON.stringify(email));
+                loginSuccess (dispatch, response);
+            } else if(response == "wrong email") {
+                dispatch({ type: LOGIN_EMAIL_INVALID });
+            } else if(response == "wrong password") {
+                dispatch({ type: LOGIN_PASSWORD_INVALID });
             }else {
                 loginError(dispatch);
             }
         })
-        .catch((error) => {
-            console.log(error);
-            loginError(dispatch)
-        });
+        .catch(() => loginError(dispatch));
 
     }
 };
 
-const loginStatus = (dispatch, status) => {
+const loginSuccess = (dispatch, status) => {
     dispatch({
         type: LOGIN_USER_SUCCESS,
         payload: status
     });
-    console.log(status);
     if(status == "success") {
         Actions.home();
     }
 };
 
 const loginError = (dispatch) => {
-    dispatch({ type: LOGIN_USER_FAIL });
+    dispatch({ type: LOGIN_ERROR });
 };
 
 
