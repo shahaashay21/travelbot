@@ -20,3 +20,8 @@ export const PASSWORD_INVALID = 'password_invalid';
 export const REGISTRATION_ERROR = 'registration_error';
 export const REGISTRATION_SUCCESS = 'registration_success';
 export const REGISTRATION_EXIST = 'registration_exist';
+
+//Home
+export const PROCESS_FEED = 'process_feed';
+export const RENDER_FEED = 'render_feed';
+export const ERROR_FEED = 'error_feed';

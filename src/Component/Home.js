@@ -1,12 +1,24 @@
 import React, { Component } from 'react';
-import { View, AsyncStorage, Text } from 'react-native';
+import { View, ListView, AsyncStorage, Text, ScrollView, Platform, Alert, ToastAndroid } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { EMAIL } from '../Config/Config';
+import { connect } from 'react-redux';
+import { Header } from 'react-native-elements';
+import { getFeed } from '../Actions/HomeAction';
+import { Spinner } from "./Common/Spinner";
+import FeedDetail from "./FeedDetail";
 
 class Home extends Component {
 
+
     componentWillMount() {
         this.checkLoggedIn();
+        this.props.getFeed();
+    }
+
+    renderRow(feed) {
+        console.log(feed);
+        return <FeedDetail feed={feed}/>;
     }
 
     checkLoggedIn(){
@@ -17,13 +29,58 @@ class Home extends Component {
         });
     };
 
+    getFeed(){
+        if(this.props.loading){
+            return (
+                <View style={{flex:1, justifyContent: 'center', alignContent:'center'}}>
+                    <Spinner size="large"/>
+                </View>
+            );
+        } else {
+            if(this.props.feed && this.props.feed != '') {
+                const ds = new ListView.DataSource({
+                    rowHasChanged: (r1, r2) => r1 !== r2
+                });
+
+                this.dataSource = ds.cloneWithRows(this.props.feed);
+                return (
+                    <ListView
+                        dataSource={this.dataSource}
+                        renderRow={this.renderRow}
+                    />
+                );
+            }
+        }
+    }
+
+    networkError() {
+        if(this.props.error_feed){
+            if(Platform.OS !== 'ios'){
+                ToastAndroid.showWithGravity('Network Error!', ToastAndroid.SHORT, ToastAndroid.BOTTOM);
+            } else {
+                Alert.alert('Network Error!');
+            }
+        }
+    }
+
     render() {
         return (
-            <View>
-                <Text>HOME</Text>
+            <View style={{flex: 1, paddingBottom: 70}}>
+                <Header
+                    centerComponent={{ text: 'Travelers', style: { color: '#000' } }}
+                />
+                <ScrollView contentContainerStyle={{flexGrow: 1}} style={{top: 65}}>
+                    {this.getFeed()}
+                </ScrollView>
+                {this.networkError()}
             </View>
         );
     }
 }
 
-export default Home;
+const mapStateToProps = ({ home }) => {
+    const { feed, loading, error_feed } = home;
+    return { feed, loading, error_feed };
+};
+
+export default connect(mapStateToProps, { getFeed })(Home);

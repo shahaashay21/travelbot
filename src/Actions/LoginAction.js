@@ -28,12 +28,12 @@ export const loginUser = (email, password) => {
         })
         .then(response => {
             response = response.data;
-            if(response == "success"){
+            if(response.success){
                 AsyncStorage.setItem(EMAIL, JSON.stringify(email));
-                loginSuccess (dispatch, response);
-            } else if(response == "wrong email") {
+                loginSuccess (dispatch, "success");
+            } else if(response.message == "User not available" || response.message == "User not found") {
                 dispatch({ type: LOGIN_EMAIL_INVALID });
-            } else if(response == "wrong password") {
+            } else if(response.message == "Password invalid") {
                 dispatch({ type: LOGIN_PASSWORD_INVALID });
             }else {
                 loginError(dispatch);

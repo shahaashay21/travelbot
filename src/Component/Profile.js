@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, AsyncStorage } from 'react-native';
+import { View, AsyncStorage, Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { EMAIL } from '../Config/Config';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -23,23 +23,48 @@ class Profile extends Component {
         Actions.settings();
     }
 
+    headerComponent(){
+        if(Platform.OS !== 'ios'){
+            return (
+                <Header
+                    centerComponent={{ text: 'Profile', style: { color: '#000' } }}
+                    rightComponent={
+                        <Ionicons
+                            raised
+                            name='ios-settings'
+                            type='Ionicons'
+                            size={30}
+                            containerStyle={{paddingLeft: 10, paddingRight: 10}}
+                            onPress={this.onSettings.bind(this)}
+                            style={{top: 5}}
+                        />
+                    }
+                />
+            )
+        }
+
+        return (
+            <Header
+                centerComponent={{ text: 'Profile', style: { color: '#000' } }}
+                rightComponent={
+                    <Ionicons
+                        raised
+                        name='ios-settings'
+                        type='Ionicons'
+                        size={25}
+                        containerStyle={{paddingLeft: 10, paddingRight: 10}}
+                        onPress={this.onSettings.bind(this)}
+                        style={{top: 14}}
+                    />
+                }
+            />
+        )
+    }
+
     render() {
         return (
             <View style={{flex: 1}}>
-                    <Header
-                        centerComponent={{ text: 'Profile', style: { color: '#000' } }}
-                        rightComponent={
-                            <Ionicons
-                                raised
-                                name='ios-settings'
-                                type='Ionicons'
-                                size={30}
-                                containerStyle={{paddingLeft: 10, paddingRight: 10}}
-                                onPress={this.onSettings.bind(this)}
-                                style={{top: 5}}
-                            />
-                        }
-                    />
+                    {this.headerComponent()}
             </View>
         );
     }

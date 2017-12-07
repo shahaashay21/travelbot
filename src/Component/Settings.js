@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, AsyncStorage, ScrollView } from 'react-native';
+import { View, AsyncStorage, ScrollView, Platform } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { EMAIL } from '../Config/Config';
 import { Header } from 'react-native-elements';
@@ -30,9 +30,9 @@ class Settings extends Component {
         this.checkLoggedIn();
     }
 
-    render() {
-        return (
-            <View style={{flex:1}}>
+    backButtonComponent(){
+        if(Platform.OS !== 'ios'){
+            return(
                 <Header outerContainerStyles={{ zIndex: 1 }}
                     leftComponent={<Ionicons
                         name='ios-arrow-back'
@@ -44,6 +44,28 @@ class Settings extends Component {
                     }
                     centerComponent={{ text: 'Settings', style: { color: '#000' } }}
                 />
+            );
+        }
+
+        return(
+            <Header outerContainerStyles={{ zIndex: 1 }}
+                leftComponent={<Ionicons
+                    name='ios-arrow-back'
+                    type='Ionicons'
+                    size={28}
+                    onPress={() => Actions.pop()}
+                    style={{top: 15}}
+                    />
+                }
+                centerComponent={{ text: 'Settings', style: { color: '#000' } }}
+            />
+        );
+    }
+
+    render() {
+        return (
+            <View style={{flex:1}}>
+                {this.backButtonComponent()}
                 <View style={{justifyContent: 'flex-end', flex:1, paddingBottom: 10}}>
                     <TButton
                         name="Log out"
