@@ -25,3 +25,4 @@ export const REGISTRATION_EXIST = 'registration_exist';
 export const PROCESS_FEED = 'process_feed';
 export const RENDER_FEED = 'render_feed';
 export const ERROR_FEED = 'error_feed';
+export const USER_LIKE = 'user_like';

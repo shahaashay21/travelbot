@@ -1,19 +1,59 @@
 import React, { Component } from 'react';
 import { Text, View, Image, Linking, Button } from 'react-native';
+import { connect } from 'react-redux';
 import { Card, CardSection } from './Common';
+import { updateUserLike } from '../Actions/HomeAction';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 class FeedDetail extends Component {
 
+    componentWillMount(){
+        // console.log("Hi");
+        // console.log(this.props);
+    }
+
+    likedOrNot(){
+        if(this.props.feed.like_by_me){
+            return(
+                <Ionicons
+                    style={{marginLeft: 20}}
+                    name='ios-heart'
+                    type='Ionicons'
+                    color='#db2e2e'
+                    size={28}
+                    onPress={this.onLike.bind(this)}
+                />
+            )
+        }
+        return(
+            <Ionicons
+                style={{marginLeft: 20}}
+                name='md-heart-outline'
+                type='Ionicons'
+                size={28}
+                onPress={this.onLike.bind(this)}
+            />
+        )
+    }
+
+    onLike(){
+        // console.log(this.props.feed.user_id);
+        this.props.updateUserLike(this.props.feed.like_by_me, this.props.feed.id, this.props.feed.user_id, this.props.feed);
+    }
+
     render() {
         const { feed } = this.props;
-        const {title, artist, thumbnail_image, image, url} = feed;
+        const {trip_profile_pic, firstName, lastName, trip_name, profile_pic, likes_count, comments_count} = feed;
 
         const {
             headerContentStyle,
             thumbnailStyle,
             thumbnailContainerStyle,
             headerTextStyle,
-            imageStyle
+            imageStyle,
+            likeStyle,
+            likeCountStyle
         } = styles;
 
         return (
@@ -22,17 +62,17 @@ class FeedDetail extends Component {
                     <View style={thumbnailContainerStyle}>
                         <Image
                             style={thumbnailStyle}
-                            source={{uri: thumbnail_image}}
+                            source={{uri: profile_pic}}
                         />
                     </View>
                     <View style={headerContentStyle}>
-                        <Text style={headerTextStyle}> {title} </Text>
-                        <Text> {artist} </Text>
+                        <Text style={headerTextStyle}> {firstName} {lastName} </Text>
+                        <Text> {trip_name} </Text>
                     </View>
                 </CardSection>
 
                 <CardSection>
-                    <Image style={imageStyle} source={{uri: image}}/>
+                    <Image style={imageStyle} source={{uri: trip_profile_pic}}/>
                 </CardSection>
 
                 {/*<CardSection>*/}
@@ -40,6 +80,18 @@ class FeedDetail extends Component {
                         {/*Buy Now*/}
                     {/*</Button>*/}
                 {/*</CardSection>*/}
+                <CardSection>
+                    {this.likedOrNot()}
+                    <Text style={likeCountStyle}> {likes_count}  </Text>
+                    <FontAwesome
+                        style={{marginLeft: 15}}
+                        name='comment-o'
+                        type='FontAwesome'
+                        color='#262626'
+                        size={24}
+                    />
+                    <Text style={likeCountStyle}> {comments_count}  </Text>
+                </CardSection>
             </Card>
         );
     }
@@ -67,7 +119,17 @@ const styles = {
         height:300,
         flex: 1,
         width: null
+    },
+    likeCountStyle: {
+        marginLeft: 0,
+        top: 3,
+        fontSize: 16
     }
 }
 
-export default FeedDetail;
+const mapStateToProps = ({home}) => {
+    const {user_like} = home;
+    return {user_like};
+}
+
+export default connect(mapStateToProps, {updateUserLike})(FeedDetail);

@@ -17,7 +17,7 @@ class Home extends Component {
     }
 
     renderRow(feed) {
-        console.log(feed);
+        // console.log(feed);
         return <FeedDetail feed={feed}/>;
     }
 
@@ -37,12 +37,13 @@ class Home extends Component {
                 </View>
             );
         } else {
-            if(this.props.feed && this.props.feed != '') {
+            if(this.props.feed && this.props.feed.trips && this.props.feed.trips != '') {
                 const ds = new ListView.DataSource({
                     rowHasChanged: (r1, r2) => r1 !== r2
                 });
 
-                this.dataSource = ds.cloneWithRows(this.props.feed);
+                console.log(this.props.feed.trips);
+                this.dataSource = ds.cloneWithRows(this.props.feed.trips);
                 return (
                     <ListView
                         dataSource={this.dataSource}
