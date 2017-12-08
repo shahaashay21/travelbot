@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ListView, AsyncStorage, Text, ScrollView, Platform, Alert, ToastAndroid } from 'react-native';
+import { View, ListView, AsyncStorage, Text, ScrollView, Platform, Alert, ToastAndroid, Image } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { EMAIL } from '../Config/Config';
 import { connect } from 'react-redux';
@@ -46,6 +46,7 @@ class Home extends Component {
                 this.dataSource = ds.cloneWithRows(this.props.feed.trips);
                 return (
                     <ListView
+                        style={{flex: 1}}
                         dataSource={this.dataSource}
                         renderRow={this.renderRow}
                     />
@@ -70,7 +71,7 @@ class Home extends Component {
                 <Header
                     centerComponent={{ text: 'Travelers', style: { color: '#000' } }}
                 />
-                <ScrollView contentContainerStyle={{flexGrow: 1}} style={{top: 65}}>
+                <ScrollView contentContainerStyle={{flexGrow: 1}} style={{top: 65}} showsVerticalScrollIndicator={false}>
                     {this.getFeed()}
                 </ScrollView>
                 {this.networkError()}

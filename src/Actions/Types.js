@@ -26,3 +26,10 @@ export const PROCESS_FEED = 'process_feed';
 export const RENDER_FEED = 'render_feed';
 export const ERROR_FEED = 'error_feed';
 export const USER_LIKE = 'user_like';
+
+//Search
+export const PROCESS_SEARCH = 'process_search';
+export const RENDER_USER_SEARCH = 'render_user_search';
+export const RENDER_PLACE_SEARCH = 'render_place_search';
+export const RENDER_TRIP_SEARCH = 'render_trip_search';
+export const ERROR_SEARCH = 'error_search';

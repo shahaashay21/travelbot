@@ -9,8 +9,6 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 class FeedDetail extends Component {
 
     componentWillMount(){
-        // console.log("Hi");
-        // console.log(this.props);
     }
 
     likedOrNot(){
@@ -44,7 +42,7 @@ class FeedDetail extends Component {
 
     render() {
         const { feed } = this.props;
-        const {trip_profile_pic, firstName, lastName, trip_name, profile_pic, likes_count, comments_count} = feed;
+        const {trip_profile_pic, firstName, lastName, trip_name, profile_pic, likes_count, comments_count, timeDiff} = feed;
 
         const {
             headerContentStyle,
@@ -53,7 +51,8 @@ class FeedDetail extends Component {
             headerTextStyle,
             imageStyle,
             likeStyle,
-            likeCountStyle
+            likeCountStyle,
+            timeStyle
         } = styles;
 
         return (
@@ -92,6 +91,9 @@ class FeedDetail extends Component {
                     />
                     <Text style={likeCountStyle}> {comments_count}  </Text>
                 </CardSection>
+                <CardSection>
+                    <Text style={timeStyle}> {timeDiff} </Text>
+                </CardSection>
             </Card>
         );
     }
@@ -124,6 +126,10 @@ const styles = {
         marginLeft: 0,
         top: 3,
         fontSize: 16
+    },
+    timeStyle: {
+        marginLeft: 10,
+        fontSize: 12
     }
 }
 

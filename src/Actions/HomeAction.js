@@ -36,6 +36,6 @@ const getTripFeed = (dispatch) => {
                 response = response.data;
                 setTimeout(function () {
                     dispatch({ type: RENDER_FEED, payload: response })
-                }, 2000)
+                }, 1000)
             }).catch(() => dispatch ({ type: ERROR_FEED }))
 }
