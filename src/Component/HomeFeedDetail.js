@@ -37,7 +37,20 @@ class FeedDetail extends Component {
 
     onLike(){
         // console.log(this.props.feed.user_id);
-        this.props.updateUserLike(this.props.feed.like_by_me, this.props.feed.id, this.props.feed.user_id, this.props.feed);
+        this.props.updateUserLike(this.props.feed.like_by_me, this.props.feed.id, this.props.feed.user_id);
+    }
+
+    userAvatar(){
+        if(!this.props.feed.profile_pic || this.props.feed.profile_pic == ""){
+            this.props.feed.profile_pic = 'https://cdn0.iconfinder.com/data/icons/PRACTIKA/256/user.png';
+        }
+
+        return(
+            <Image
+                style={styles.thumbnailStyle}
+                source={{uri: this.props.feed.profile_pic}}
+            />
+        )
     }
 
     render() {
@@ -59,10 +72,7 @@ class FeedDetail extends Component {
             <Card>
                 <CardSection>
                     <View style={thumbnailContainerStyle}>
-                        <Image
-                            style={thumbnailStyle}
-                            source={{uri: profile_pic}}
-                        />
+                        {this.userAvatar()}
                     </View>
                     <View style={headerContentStyle}>
                         <Text style={headerTextStyle}> {firstName} {lastName} </Text>

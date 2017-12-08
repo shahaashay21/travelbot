@@ -3,10 +3,12 @@ import AuthReducer from './AuthReducer';
 import RegisterReducer from './RegisterReducer';
 import HomeReducer from './HomeReducer';
 import SearchReducer from './SearchReducer';
+import ProfileReducer from './ProfileReducer';
 
 export default combineReducers({
     auth: AuthReducer,
     reg: RegisterReducer,
     home: HomeReducer,
-    search: SearchReducer
+    search: SearchReducer,
+    profile: ProfileReducer
 });

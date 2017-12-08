@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { Header } from 'react-native-elements';
 import { getFeed } from '../Actions/HomeAction';
 import { Spinner } from "./Common/Spinner";
-import FeedDetail from "./FeedDetail";
+import FeedDetail from "./HomeFeedDetail";
 
 class Home extends Component {
 

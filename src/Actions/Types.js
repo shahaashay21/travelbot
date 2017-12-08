@@ -33,3 +33,8 @@ export const RENDER_USER_SEARCH = 'render_user_search';
 export const RENDER_PLACE_SEARCH = 'render_place_search';
 export const RENDER_TRIP_SEARCH = 'render_trip_search';
 export const ERROR_SEARCH = 'error_search';
+
+//Profile
+export const PROCESS_MY_FEED = 'process_my_feed';
+export const RENDER_MY_FEED = 'render_my_feed';
+export const ERROR_MY_FEED = 'error_my_feed';

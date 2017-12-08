@@ -1,17 +1,15 @@
-import { PROCESS_FEED, RENDER_FEED, ERROR_FEED, USER_LIKE } from '../Actions/Types';
+import { PROCESS_MY_FEED, RENDER_MY_FEED, ERROR_MY_FEED } from '../Actions/Types';
 
-const INITIAL_STATE = { feed: {}, error_feed: false, loading: false, user_like: false };
+const INITIAL_STATE = { feed: {}, error_feed: false, loading: false };
 
 export default(state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case PROCESS_FEED:
+        case PROCESS_MY_FEED:
             return { ...state, loading: true };
-        case RENDER_FEED:
+        case RENDER_MY_FEED:
             return {...state, feed: action.payload, error_feed: false, loading: false};
-        case ERROR_FEED:
+        case ERROR_MY_FEED:
             return {...state, loading: false, error_feed: true};
-        case USER_LIKE:
-            return {...state};
         default:
             return { ...state };
     }

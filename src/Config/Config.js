@@ -1,4 +1,4 @@
-export const URL = "http://10.0.0.247:3000";
+export const URL = "http://192.168.1.21:3000";
 
 // Storage Keys
 export const EMAIL = "email";

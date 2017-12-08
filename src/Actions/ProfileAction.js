@@ -1,11 +1,11 @@
 import { URL } from '../Config/Config';
 import axios from 'axios';
-import { PROCESS_FEED, RENDER_FEED, ERROR_FEED, USER_LIKE } from './Types';
-import { getMyFeed } from './ProfileAction';
+import { PROCESS_MY_FEED, RENDER_MY_FEED, ERROR_MY_FEED } from './Types';
 
-export const getFeed = () => {
+export const getMyFeed = () => {
+    console.log("Someone call me");
     return (dispatch) => {
-        dispatch({type: PROCESS_FEED});
+        dispatch({type: PROCESS_MY_FEED});
 
         getTripFeed(dispatch);
     }
@@ -20,23 +20,22 @@ export const updateUserLike = (like_by_me, tripId, userId) => {
             response = response.data
             if(response.success){
                 getTripFeed(dispatch);
-                // getTripFeed(dispatch);
-                //Move to last to make it faster (not)
             }else {
-                dispatch ({ type: ERROR_FEED });
+                dispatch ({ type: ERROR_MY_FEED });
             }
-        }).catch(() => dispatch ({ type: ERROR_FEED }))
+        }).catch(() => dispatch ({ type: ERROR_MY_FEED }))
     }
 }
 
 const getTripFeed = (dispatch) => {
         // axios.get(URL+'/trip/feed', {
-        axios.post(URL+'/getNewsFeed', {
+        axios.post(URL+'/mytimeline', {
             timeout: 2000
         }).then(response => {
             response = response.data;
+            console.log(response);
             // setTimeout(function () {
-                dispatch({ type: RENDER_FEED, payload: response })
-            // }, 100)
-        }).catch(() => dispatch ({ type: ERROR_FEED }))
+                dispatch({ type: RENDER_MY_FEED, payload: response })
+            // }, 1000);
+        }).catch(() => dispatch ({ type: ERROR_MY_FEED }))
 }
