@@ -13,6 +13,7 @@ class Search extends Component {
 
     componentWillMount() {
         this.checkLoggedIn();
+        this.search("");
     }
 
     checkLoggedIn(){

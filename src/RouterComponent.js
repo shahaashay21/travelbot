@@ -4,6 +4,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import Welcome from './Component/Welcome';
 import Login from './Component/Login';
@@ -12,7 +13,7 @@ import Home from './Component/Home';
 import Search from './Component/Search';
 import Trip from './Component/Trip';
 import Profile from './Component/Profile';
-import Notification from './Component/Notification';
+import Navigation from './Component/Navigation';
 import Settings from './Component/Settings';
 
 const HomeIcon = ({ selected, title }) => {
@@ -50,9 +51,9 @@ const TripIcon = ({ selected, title }) => {
 
 const NotificationIcon = ({ selected, title }) => {
     return (
-        <Ionicons
-            name='ios-heart-outline'
-            type='Ionicons'
+        <MaterialCommunityIcons
+            name='map-marker-outline'
+            type='Feather'
             color='#262626'
             size={32}
         />
@@ -102,7 +103,7 @@ const RouterComponent = () => {
                     </Scene>
 
                     <Scene key="notification" title="Notification" icon={NotificationIcon}>
-                        <Scene key="notification" component={ Notification } hideNavBar type={ActionConst.RESET} initial/>
+                        <Scene key="notification" component={ Navigation } hideNavBar type={ActionConst.RESET} initial/>
                     </Scene>
 
                     <Scene key="profile" title="Profile" icon={ProfileIcon} >
