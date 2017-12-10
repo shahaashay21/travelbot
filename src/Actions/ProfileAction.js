@@ -3,7 +3,6 @@ import axios from 'axios';
 import { PROCESS_MY_FEED, RENDER_MY_FEED, ERROR_MY_FEED } from './Types';
 
 export const getMyFeed = () => {
-    console.log("Someone call me");
     return (dispatch) => {
         dispatch({type: PROCESS_MY_FEED});
 

@@ -38,3 +38,6 @@ export const ERROR_SEARCH = 'error_search';
 export const PROCESS_MY_FEED = 'process_my_feed';
 export const RENDER_MY_FEED = 'render_my_feed';
 export const ERROR_MY_FEED = 'error_my_feed';
+
+//Navigation
+export const SEND_POSITION = 'send_position';
