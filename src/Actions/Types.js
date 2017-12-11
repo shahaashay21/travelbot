@@ -41,3 +41,8 @@ export const ERROR_MY_FEED = 'error_my_feed';
 
 //Navigation
 export const SEND_POSITION = 'send_position';
+
+//Trip
+export const CREATE_TRIP = 'create_trip';
+export const TRIP_PROCESS = 'trip_process';
+export const TRIP_ERROR = 'trip_error';

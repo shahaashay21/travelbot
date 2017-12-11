@@ -4,7 +4,8 @@ import RegisterReducer from './RegisterReducer';
 import HomeReducer from './HomeReducer';
 import SearchReducer from './SearchReducer';
 import ProfileReducer from './ProfileReducer';
-import NavigationReducer from './NavigationReducer'
+import NavigationReducer from './NavigationReducer';
+import TripReducer from './TripReducer';
 
 export default combineReducers({
     auth: AuthReducer,
@@ -12,5 +13,6 @@ export default combineReducers({
     home: HomeReducer,
     search: SearchReducer,
     profile: ProfileReducer,
-    navigation: NavigationReducer
+    navigation: NavigationReducer,
+    trip: TripReducer
 });

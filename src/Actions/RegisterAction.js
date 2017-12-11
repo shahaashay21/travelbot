@@ -35,7 +35,7 @@ export const passwordChanged = (password) => {
 
 export const registerUser = (first_name, last_name, email, password) => {
     return (dispatch) => {
-          dispatch({type: REGISTER_PROCESS});
+        dispatch({type: REGISTER_PROCESS});
 
         const sendData = { firstName: first_name, lastName: last_name, email, password };
 
