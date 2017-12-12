@@ -15,6 +15,7 @@ import Trip from './Component/Trip';
 import Profile from './Component/Profile';
 import Navigation from './Component/Navigation';
 import Settings from './Component/Settings';
+import TripDetail from './Component/TripDetail';
 
 const HomeIcon = ({ selected, title }) => {
     return (
@@ -112,6 +113,7 @@ const RouterComponent = () => {
 
                 </Scene>
                 <Scene key="settings" component={ Settings } hideNavBar back-={true} />
+                <Scene key="tripDetail" component={ TripDetail } hideNavBar back-={true} />
             </Stack>
         </Router>
     );

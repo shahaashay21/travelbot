@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { Text, View, Image, Linking, Button, TouchableHighlight } from 'react-native';
+import { Text, View, Image, Linking, Button, TouchableHighlight, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { Card, CardSection } from './Common';
-import { updateUserLike } from '../Actions/HomeAction';
+import { updateUserLike } from '../Actions/TripDetailAction';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
 
-class FeedDetail extends Component {
+class TripDetailInformation extends Component {
 
     componentWillMount(){
+        console.log("IN TRIP DETAIL INFORMATION");
     }
 
     likedOrNot(){
@@ -54,15 +55,10 @@ class FeedDetail extends Component {
         )
     }
 
-    onPress = () =>{
-        console.log("OPEN TRIP");
-        Actions.tripDetail({current_trip_id: this.props.feed.id, current_trip_name: this.props.feed.trip_name});
-    }
-
     render() {
         const { feed } = this.props;
-        const {trip_profile_pic, firstName, lastName, trip_name, profile_pic, likes_count, comments_count, timeDiff, id} = feed;
-
+        const {trip_profile_pic, firstName, lastName, trip_name, profile_pic, likes_count, comments_count, timeDiff, id, description} = feed;
+        console.log(feed);
         const {
             headerContentStyle,
             thumbnailStyle,
@@ -71,10 +67,12 @@ class FeedDetail extends Component {
             imageStyle,
             likeStyle,
             likeCountStyle,
-            timeStyle
+            timeStyle,
+            headingStyle
         } = styles;
 
         return (
+            <ScrollView>
             <Card>
                 <CardSection>
                     <View style={thumbnailContainerStyle}>
@@ -86,11 +84,9 @@ class FeedDetail extends Component {
                     </View>
                 </CardSection>
 
-                {/* <CardSection> */}
-                    <TouchableHighlight onPress={this.onPress}>
+                <CardSection>
                         <Image style={imageStyle} source={{uri: trip_profile_pic}}/>
-                    </TouchableHighlight>
-                {/* </CardSection> */}
+                </CardSection>
 
                 {/*<CardSection>*/}
                     {/*<Button onPress={ () => Linking.openURL(url) }>*/}
@@ -113,6 +109,7 @@ class FeedDetail extends Component {
                     <Text style={timeStyle}> {timeDiff} </Text>
                 </CardSection>
             </Card>
+            </ScrollView>
         );
     }
 };
@@ -148,6 +145,10 @@ const styles = {
     timeStyle: {
         marginLeft: 10,
         fontSize: 12
+    },
+    headingStyle: {
+        marginLeft: 10,
+        fontSize: 18
     }
 }
 
@@ -156,4 +157,4 @@ const mapStateToProps = ({home}) => {
     return {user_like};
 }
 
-export default connect(mapStateToProps, {updateUserLike})(FeedDetail);
+export default connect(mapStateToProps, {updateUserLike})(TripDetailInformation);

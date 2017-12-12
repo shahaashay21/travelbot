@@ -6,6 +6,7 @@ import SearchReducer from './SearchReducer';
 import ProfileReducer from './ProfileReducer';
 import NavigationReducer from './NavigationReducer';
 import TripReducer from './TripReducer';
+import TripDetailReducer from './TripDetailReducer';
 
 export default combineReducers({
     auth: AuthReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
     search: SearchReducer,
     profile: ProfileReducer,
     navigation: NavigationReducer,
-    trip: TripReducer
+    trip: TripReducer,
+    tripDetail: TripDetailReducer
 });

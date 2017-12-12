@@ -47,3 +47,8 @@ export const CREATE_TRIP = 'create_trip';
 export const TRIP_PROCESS = 'trip_process';
 export const TRIP_ERROR = 'trip_error';
 export const TRIP_ADDED = 'trip_added';
+
+//Trip Details
+export const PROCESS_OWN_FEED = 'process_own_feed';
+export const RENDER_OWN_FEED = 'render_own_feed';
+export const ERROR_OWNY_FEED = 'error_own_feed';
