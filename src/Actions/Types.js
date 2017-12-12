@@ -46,3 +46,4 @@ export const SEND_POSITION = 'send_position';
 export const CREATE_TRIP = 'create_trip';
 export const TRIP_PROCESS = 'trip_process';
 export const TRIP_ERROR = 'trip_error';
+export const TRIP_ADDED = 'trip_added';

@@ -109,7 +109,7 @@ class Profile extends Component {
 
     render() {
         return (
-            <View style={{flex: 1}}>
+            <View style={{flex: 1, paddingBottom: 70}}>
                     {this.headerComponent()}
                     <ScrollView contentContainerStyle={{flexGrow: 1}} style={{top: 65}} showsVerticalScrollIndicator={false}>
                         {this.getFeed()}

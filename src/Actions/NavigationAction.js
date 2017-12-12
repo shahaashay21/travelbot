@@ -3,8 +3,6 @@ import { URL } from '../Config/Config';
 import axios from 'axios';
 
 export const sendPosition = (email, latitude, longitude) => {
-    console.log("GOT: " + longitude);
-    console.log("Url: " + URL);
     return(dispatch) => {
         sendData = { email, latitude, longitude};
         axios.post(URL+'/trip/saveposition', sendData, {

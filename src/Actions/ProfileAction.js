@@ -1,6 +1,7 @@
 import { URL } from '../Config/Config';
 import axios from 'axios';
 import { PROCESS_MY_FEED, RENDER_MY_FEED, ERROR_MY_FEED } from './Types';
+import { Actions } from 'react-native-router-flux';
 
 export const getMyFeed = () => {
     return (dispatch) => {
@@ -32,9 +33,22 @@ const getTripFeed = (dispatch) => {
             timeout: 2000
         }).then(response => {
             response = response.data;
-            console.log(response);
-            // setTimeout(function () {
-                dispatch({ type: RENDER_MY_FEED, payload: response })
-            // }, 1000);
+            dispatch({ type: RENDER_MY_FEED, payload: response });
         }).catch(() => dispatch ({ type: ERROR_MY_FEED }))
+}
+
+export const deleteTrip = (trip_id) => {
+    return (dispatch) => {
+        var sendData = {trip_id};
+        axios.post(URL+'/trip/remove', sendData, {
+            timeout: 2000
+        }).then(response => {
+            response = response.data
+            if(response == "done"){
+                getTripFeed(dispatch);
+            }else {
+                dispatch ({ type: ERROR_MY_FEED });
+            }
+        }).catch(() => dispatch ({ type: ERROR_MY_FEED }))
+    }
 }

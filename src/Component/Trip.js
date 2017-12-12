@@ -166,6 +166,7 @@ class Trip extends Component {
                         <FormInput
                             placeholder="5000"
                             autoCorrect={false}
+                            keyboardType={Platform.iOS ? "number-pad" : "numeric"}
                             value={this.state.budget}
                             onChangeText={(budget) => this.setState({budget})}
                         />

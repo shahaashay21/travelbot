@@ -1,4 +1,4 @@
-import { CREATE_TRIP, TRIP_PROCESS, TRIP_ERROR } from "./Types";
+import { CREATE_TRIP, TRIP_PROCESS, TRIP_ERROR, TRIP_ADDED } from "./Types";
 import { URL } from '../Config/Config';
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
@@ -15,8 +15,8 @@ export const create_trip = (source, destination, budget, start_date, end_date, t
         }).then(response => {
             response = response.data;
             console.log(response);
-            if(response == "Done"){
-                console.log("INSIDE DONE");
+            if(response.success){
+                dispatch({ type: TRIP_ADDED })
                 Actions.tabbar();
             }else{
                 dispatch({ type: TRIP_ERROR });

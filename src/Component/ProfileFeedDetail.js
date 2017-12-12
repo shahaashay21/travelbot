@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Text, View, Image, Linking, Button } from 'react-native';
+import { Text, View, Image, Linking, Button, Vibration } from 'react-native';
 import { connect } from 'react-redux';
 import { Card, CardSection } from './Common';
-import { updateUserLike } from '../Actions/ProfileAction';
+import { updateUserLike, deleteTrip } from '../Actions/ProfileAction';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 class FeedDetail extends Component {
 
@@ -40,8 +41,13 @@ class FeedDetail extends Component {
         this.props.updateUserLike(this.props.feed.like_by_me, this.props.feed.id, this.props.feed.user_id);
     }
 
+    onDelete(){
+        // console.log(this.props.feed.user_id);
+        this.props.deleteTrip(this.props.feed.id);
+    }
+
     userAvatar(){
-        if(!this.props.feed.profile_pic || this.props.feed.profile_pic == ""){
+        if(!this.props.feed.profile_pic || this.props.feed.profile_pic == "" || this.props.feed.profile_pic.indexOf("http") == -1){
             this.props.feed.profile_pic = 'https://cdn0.iconfinder.com/data/icons/PRACTIKA/256/user.png';
         }
 
@@ -100,6 +106,16 @@ class FeedDetail extends Component {
                         size={24}
                     />
                     <Text style={likeCountStyle}> {comments_count}  </Text>
+                    <View style={{flex: 1, justifyContent: 'flex-end', alignItems: 'flex-end'}}>
+                        <FontAwesome
+                            style={{right: 15}}
+                            name='trash-o'
+                            type='FontAwesome'
+                            color='#db2e2e'
+                            size={24}
+                            onPress={this.onDelete.bind(this)}
+                        />
+                    </View>
                 </CardSection>
                 <CardSection>
                     <Text style={timeStyle}> {timeDiff} </Text>
@@ -148,4 +164,4 @@ const mapStateToProps = ({home}) => {
     return {user_like};
 }
 
-export default connect(mapStateToProps, {updateUserLike})(FeedDetail);
+export default connect(mapStateToProps, {updateUserLike, deleteTrip})(FeedDetail);

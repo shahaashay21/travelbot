@@ -41,7 +41,7 @@ class FeedDetail extends Component {
     }
 
     userAvatar(){
-        if(!this.props.feed.profile_pic || this.props.feed.profile_pic == ""){
+        if(!this.props.feed.profile_pic || this.props.feed.profile_pic == "" || this.props.feed.profile_pic.indexOf("http") == -1){
             this.props.feed.profile_pic = 'https://cdn0.iconfinder.com/data/icons/PRACTIKA/256/user.png';
         }
 

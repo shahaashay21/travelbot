@@ -78,7 +78,7 @@ class Search extends Component {
 
                 var userLoop = this.props.userSearchResult;
                 for (var i = 0; i < userLoop.length; i++) {
-                    if(!userLoop[i]['profile_pic'] || userLoop[i]['profile_pic'] == ''){
+                    if(!userLoop[i]['profile_pic'] || userLoop[i]['profile_pic'] == '' || userLoop[i]['profile_pic'].indexOf("http") == -1){
                         userLoop[i]['profile_pic'] = 'https://cdn0.iconfinder.com/data/icons/PRACTIKA/256/user.png';
                     }
                     userLoop[i]['name'] = this.capitalizeFirstLetter(userLoop[i]['firstName']) + ' ' + this.capitalizeFirstLetter(userLoop[i]['lastName']);
