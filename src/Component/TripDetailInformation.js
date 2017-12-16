@@ -6,6 +6,7 @@ import { updateUserLike } from '../Actions/TripDetailAction';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { Actions } from 'react-native-router-flux';
+import { URL } from '../Config/Config';
 
 class TripDetailInformation extends Component {
 
@@ -55,6 +56,25 @@ class TripDetailInformation extends Component {
         )
     }
 
+    userTripPhoto(){
+        if(!this.props.feed.trip_profile_pic || this.props.feed.trip_profile_pic == ""){
+            this.props.feed.trip_profile_pic = 'https://d12dkjq56sjcos.cloudfront.net/pub/media/wysiwyg/route-images/View-Of-New-York-Brooklyn-Bridge-Night-Slider-Big-Bus-Tours-Jan-2017.jpg';
+        } else if (this.props.feed.trip_profile_pic.indexOf("http") == -1){
+            this.props.feed.trip_profile_pic = URL + this.props.feed.trip_profile_pic;
+        }else {
+            this.props.feed.trip_profile_pic = this.props.feed.trip_profile_pic;
+        }
+
+        return(
+            <Image
+                style={styles.imageStyle}
+                source={{uri: this.props.feed.trip_profile_pic}}
+            />
+        )
+    }
+
+    
+
     render() {
         const { feed } = this.props;
         const {trip_profile_pic, firstName, lastName, trip_name, profile_pic, likes_count, comments_count, timeDiff, id, description} = feed;
@@ -85,7 +105,8 @@ class TripDetailInformation extends Component {
                 </CardSection>
 
                 <CardSection>
-                        <Image style={imageStyle} source={{uri: trip_profile_pic}}/>
+                        {/* <Image style={imageStyle} source={{uri: trip_profile_pic}}/> */}
+                        {this.userTripPhoto()}
                 </CardSection>
 
                 {/*<CardSection>*/}

@@ -57,11 +57,11 @@ class Notification extends Component {
         );
 
         var self = this;
-        setInterval(function(){
-            if(self.state.latitude && self.state.longitude){
-                self.props.sendPosition(self.state.email,self.state.latitude, self.state.longitude);
-            }
-        }, 60000);
+        // setInterval(function(){
+        //     if(self.state.latitude && self.state.longitude){
+        //         self.props.sendPosition(self.state.email,self.state.latitude, self.state.longitude);
+        //     }
+        // }, 60000);
     }
 
     initialPosition(){

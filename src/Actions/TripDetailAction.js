@@ -40,16 +40,18 @@ const getTripFeed = (dispatch, own_trip_id) => {
 
 export const getSingleTripInformation = (own_trip_id) => {
     return (dispatch) => {
-        dispatch({type: PROCESS_OWN_FEED});
-
-        // axios.get(URL+'/trip/feed', {
-        sendData = {trip_id: own_trip_id};
-        axios.post(URL+'/getTripDetails', sendData, {
-            timeout: 2000
-        }).then(response => {
-            response = response.data;
-            console.log(response);
-            // dispatch({ type: RENDER_OWN_FEED, payload: response });
-        }).catch(() => dispatch ({ type: ERROR_OWN_FEED }))
     }
+    // return (dispatch) => {
+    //     dispatch({type: PROCESS_OWN_FEED});
+
+    //     // axios.get(URL+'/trip/feed', {
+    //     sendData = {trip_id: own_trip_id};
+    //     axios.post(URL+'/getTripDetails', sendData, {
+    //         timeout: 2000
+    //     }).then(response => {
+    //         response = response.data;
+    //         console.log(response);
+    //         // dispatch({ type: RENDER_OWN_FEED, payload: response });
+    //     }).catch(() => dispatch ({ type: ERROR_OWN_FEED }))
+    // }
 }

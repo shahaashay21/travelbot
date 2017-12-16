@@ -140,7 +140,7 @@ class Search extends Component {
                         <ListItem
                         roundAvatar
                         key={i}
-                        title={l.source}
+                        title={l.trip_name}
                         subtitle={l.description}
                         subtitleNumberOfLines={5}
                         />
