@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="Social Network for Travelers Student Project" />
+		<meta name="keywords" content="Social Network, Social Media, Travelers, Login, SignUp" />
+		<meta name="robots" content="index, follow" />
+		<title>Social Network for Travelers</title>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script src="controller/login-controller.js"></script>
+    <!-- Stylesheets
+    ================================================= -->
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/ionicons.min.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    
+    <!--Google Font-->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i" rel="stylesheet">
+    
+    <!--Favicon-->
+    <link rel="shortcut icon" type="image/png" href="images/fav.png"/>
+	</head>
+	<body ng-app="login" ng-controller="loginController">
+
+    <!-- Header
+    ================================================= -->
+		<header id="header-inverse">
+      <nav class="navbar navbar-default navbar-fixed-top menu">
+        <div class="container">
+
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" style="color:white;font-weight: bold" href="/">Social Network For Travellers</a>
+          </div>
+
+          <!-- Collect the nav links, forms, and other content for toggling -->
+
+        </div><!-- /.container -->
+      </nav>
+    </header>
+    <!--Header End-->
+    
+    <!-- Landing Page Contents
+    ================================================= -->
+    <div id="lp-register">
+    	<div class="container wrapper">
+        <div class="row">
+        	<div class="col-sm-5">
+            <div class="intro-texts">
+            	<h1 class="text-white">Social Network for Travellers !!!</h1>
+            	<p>Social Network for traveller is app that can be used to connect travellers. The website offers Create Trip, suggest trip on budget, News Feed, Image/Video Feed, Timeline and lot more.</p>
+
+            </div>
+          </div>
+        	<div class="col-sm-6 col-sm-offset-1">
+            <div class="reg-form-container"> 
+            
+              <!-- Register/Login Tabs-->
+              <div class="reg-options">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#register" data-toggle="tab">Register</a></li>
+                  <li><a href="#login" data-toggle="tab">Login</a></li>
+                </ul><!--Tabs End-->
+              </div>
+              
+              <!--Registration Form Contents-->
+              <div class="tab-content">
+                <div class="tab-pane active" id="register">
+                  <h3>Register Now !!!</h3>
+                  <!--Register Form-->
+                  <form name="registration_form" id='registration_form' class="form-inline">
+                    <div class="row">
+                      <div class="form-group col-xs-6">
+                        <label for="firstname" class="sr-only">First Name</label>
+                        <input id="firstname" ng-model="first_name" class="form-control input-group-lg" type="text" name="firstname" title="Enter first name" placeholder="First name"/>
+                        <p style="color:red" ng-show="first_name_invalid">First Name cannot be Empty</p>
+                      </div>
+                      <div class="form-group col-xs-6">
+                        <label for="lastname" class="sr-only">Last Name</label>
+                        <input id="lastname" ng-model="last_name" class="form-control input-group-lg" type="text" name="lastname" title="Enter last name" placeholder="Last name"/>
+                        <p style="color:red" ng-show="last_name_invalid">Last Name cannot be Empty</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-xs-12">
+                        <label for="email" class="sr-only">Email</label>
+                        <input id="email" ng-model="email" class="form-control input-group-lg" type="text" name="Email" title="Enter Email" placeholder="Your Email"/>
+                        <p style="color:red" ng-show="email_invalid">Email is not valid</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-xs-12">
+                        <label for="password" class="sr-only">Password</label>
+                        <input id="password" ng-model="reg_password" class="form-control input-group-lg" type="password" name="password" title="Enter password" placeholder="Password"/>
+                        <p style="color:red" ng-show="password_invalid">Password cannot be Empty</p>
+                      </div>
+                    </div>
+                    <div class="form-group gender">
+                      <label class="radio-inline">
+                        <input type="radio" ng-model="gender" value="male" name="optradio" checked>Male
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" ng-model="gender" value="female" name="optradio">Female
+                      </label>
+                      <p style="color:red" ng-show="gender_invalid">Select Gender</p>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-xs-6">
+                        <label for="city" class="sr-only">City</label>
+                        <input id="city" ng-model="city" class="form-control input-group-lg reg_name" type="text" name="city" title="Enter city" placeholder="Your city"/>
+                        <p style="color:red" ng-show="city_invalid">City cannot be Empty</p>
+                      </div>
+                      <div class="form-group col-xs-6">
+                        <label for="country" class="sr-only"></label>
+                        <input id="country" ng-model="country" class="form-control input-group-lg reg_name" type="text" name="country" title="Enter country" placeholder="Your country"/>
+                        <p style="color:red" ng-show="country_invalid">Country cannot be Empty</p>
+                      </div>
+                    </div>
+                  </form><!--Register Now Form Ends-->
+                  <button class="btn btn-primary" ng-click="register()">Register Now</button>
+                  <p style="color:red" ng-show="error_save">Cannot Register. Try again!!!</p>
+
+                </div><!--Registration Form Contents Ends-->
+                
+                <!--Login-->
+                <div class="tab-pane" id="login">
+                  <h3>Login</h3>
+                  <p class="text-muted">Log into your account</p>
+                  
+                  <!--Login Form-->
+                  <form name="Login_form" id='Login_form'>
+                     <div class="row">
+                      <div class="form-group col-xs-12">
+                        <label for="my-email" class="sr-only">Email</label>
+                        <input id="my-email" ng-model="login_email" class="form-control input-group-lg" type="text" name="Email" title="Enter Email" placeholder="Your Email"/>
+
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-xs-12">
+                        <label for="my-password" class="sr-only">Password</label>
+                        <input id="my-password" ng-model="login_password" class="form-control input-group-lg" type="password" name="password" title="Enter password" placeholder="Password"/>
+                      </div>
+                    </div>
+                  </form><!--Login Form Ends--> 
+                  <p><a href="#">Forgot Password?</a></p>
+                  <button class="btn btn-primary" ng-click="login()">Login Now</button>
+                  <p style="color:red" ng-show="login_invalid" >{{login_invalid_value}}</p>
+                  <p style="color:red" ng-show="login_error">Cannot Login. Try Again!!!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!--preloader-->
+    <div id="spinner-wrapper">
+      <div class="spinner"></div>
+    </div>
+
+    <!-- Scripts
+    ================================================= -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.appear.min.js"></script>
+		<script src="js/jquery.incremental-counter.js"></script>
+    <script src="js/script.js"></script>
+    
+	</body>
+</html>

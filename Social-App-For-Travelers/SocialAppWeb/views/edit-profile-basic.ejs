@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="Social Network for Travelers Student Project" />
+		<meta name="keywords" content="Social Network, Social Media, Travelers, Edit Profile Page" />
+		<meta name="robots" content="index, follow" />
+		<title>Edit Profile | Edit Profile Page</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="controller/edit-profile-controller.js"></script>
+    <!-- Stylesheets
+    ================================================= -->
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/ionicons.min.css" />
+        <link rel="stylesheet" href="css/font-awesome.min.css" />
+    
+        <!--Google Font-->
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i" rel="stylesheet">
+    
+        <!--Favicon-->
+        <link rel="shortcut icon" type="image/png" href="images/fav.png"/>
+	</head>
+  <body ng-app="editProfile" ng-controller="editProfileController" ng-init="getEditProfileBasicInfo()">
+
+    <!-- Header
+    ================================================= -->
+    <% include header.ejs %>
+    <!--Header End-->
+
+    <div class="container">
+
+      <!-- Timeline
+      ================================================= -->
+      <div class="timeline">
+        <div class="timeline-cover">
+
+          <!--Timeline Menu for Large Screens-->
+          <div class="timeline-nav-bar hidden-sm hidden-xs">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="profile-info">
+                  <img src="../{{userInfo.profile_pic}}" alt="" class="img-responsive profile-photo" />
+                  <form name="ajax_upload_form" method="post" action="uploadProfileImage"
+                        enctype="multipart/form-data" accept-charset="UTF-8">
+                    <input style="width: 150px;display: none"  title=" " type="file" name="profile_pic" id="user_profile_pic" file-model="profileImage" onchange="javascript:this.form.submit();"/>
+                    <label for="user_profile_pic" class="btn btn-primary">Upload Picture</label>
+                  </form>
+                  <h3>{{first_name}} {{last_name}}</h3>
+
+                </div>
+              </div>
+              <div class="col-md-9">
+                <ul class="list-inline profile-menu">
+                  <li><a href="/mytimelinepage">Timeline</a></li>
+                  <li><a href="#" class="active">About</a></li>
+                  <li><a href="#">Followers</a></li>
+                </ul>
+
+              </div>
+            </div>
+          </div><!--Timeline Menu for Large Screens End-->
+
+
+        </div>
+        <div id="page-contents">
+          <div class="row">
+            <div class="col-md-3">
+              
+              <!--Edit Profile Menu-->
+              <ul class="edit-menu">
+              	<li class="active"><i class="icon ion-ios-information-outline"></i><a href="#">Basic Information</a></li>
+                <li><i class="icon ion-ios-settings"></i><a href="/edit-profile-settings-page">Account Settings</a></li>
+              	<li><i class="icon ion-ios-locked-outline"></i><a href="/edit-profile-password-page">Change Password</a></li>
+              </ul>
+            </div>
+            <div class="col-md-7">
+
+              <!-- Basic Information
+              ================================================= -->
+              <div class="edit-profile-container">
+                <div class="block-title">
+                  <h4 class="grey"><i class="icon ion-android-checkmark-circle"></i>Edit basic information</h4>
+                  <div class="line"></div>
+                </div>
+                <div class="edit-block">
+                  <form name="basic-info" id="basic-info" class="form-inline">
+                    <div class="row">
+                      <div class="form-group col-xs-6">
+                        <label for="firstname">First name</label>
+                        <input id="firstname" ng-model="first_name" class="form-control input-group-lg" type="text" name="firstname" title="Enter first name" placeholder="First name" value="John" />
+                        <p style="color:red" ng-show="first_name_invalid">First Name cannot be Empty</p>
+                      </div>
+                      <div class="form-group col-xs-6">
+                        <label for="lastname" class="">Last name</label>
+                        <input id="lastname" ng-model="last_name" class="form-control input-group-lg" type="text" name="lastname" title="Enter last name" placeholder="Last name" value="Doe" />
+                        <p style="color:red" ng-show="last_name_invalid">Last Name cannot be Empty</p>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-xs-12">
+                        <label for="email">My email</label>
+                        <input id="email" ng-model="email" class="form-control input-group-lg" type="text" name="Email" title="Enter Email" placeholder="My Email" value="razor.venon@gmail.com" />
+                        <p style="color:red" ng-show="email_invalid">Invalid Email</p>
+                      </div>
+                    </div>
+
+                    <div class="form-group gender">
+                      <span class="custom-label"><strong>I am a: </strong></span>
+                      <label class="radio-inline">
+                        <input type="radio" ng-model="gender" name="optradio" ng-checked="malechecked()" value="Male">Male
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" ng-model="gender" name="optradio" ng-checked="femalechecked()" value="Female">Female
+                      </label>
+                    </div>
+                    <div class="row">
+                      <div class="form-group col-xs-6">
+                        <label for="city"> My city</label>
+                        <input id="city" ng-model="city" class="form-control input-group-lg" type="text" name="city" title="Enter city" placeholder="Your city" value="New York"/>
+                          <p style="color:red" ng-show="city_invalid">City is Invalid</p>
+                      </div>
+                      <div class="form-group col-xs-6">
+                        <label for="country">My country</label>
+                        <input id="country" ng-model="country" class="form-control input-group-lg" type="text" name="country" title="Enter country" placeholder="Your country"/>
+                          <p style="color:red" ng-show="country_invalid">Country is Invalid</p>
+                      </div>
+                    </div>
+
+                    <button class="btn btn-primary" ng-click="saveEditProfileBasic()">Save Changes</button>
+                    <div class="line"></div>
+                    <div class="alert alert-success" role="alert" ng-show="save_profile">
+                       You information saved Successfully
+                    </div>
+                    <div class="alert alert-danger" role="alert" ng-show="error_profile">
+                      Error saving your information. Try Later!
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2 static">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Footer
+    ================================================= -->
+    <% include footer.ejs %>
+    
+    <!--preloader-->
+    <div id="spinner-wrapper">
+      <div class="spinner"></div>
+    </div>
+
+    <!-- Scripts
+    ================================================= -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.sticky-kit.min.js"></script>
+    <script src="js/jquery.scrollbar.min.js"></script>
+    <script src="js/script.js"></script>
+    
+  </body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Social Network for Travelers Student Project" />
+      <meta name="keywords" content="Social Network, Social Media, Travelers, My Timeline" />
+		<meta name="robots" content="index, follow" />
+		<title>My Timeline</title>
+
+
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <script src="controller/edit-profile-controller.js"></script>
+    <!-- Stylesheets
+    ================================================= -->
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="stylesheet" href="css/ionicons.min.css" />
+        <link rel="stylesheet" href="css/font-awesome.min.css" />
+        <link href="css/emoji.css" rel="stylesheet">
+
+    <!--Google Font-->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i" rel="stylesheet">
+    
+    <!--Favicon-->
+    <link rel="shortcut icon" type="image/png" href="images/fav.png"/>
+	</head>
+    <script>
+      window.user_id='<%=user_id%>';
+    </script>
+  <body ng-app="editProfile" ng-controller="editProfileController" ng-init="usertimeline()">
+
+    <!-- Header
+    ================================================= -->
+    <% include header.ejs %>
+    <!--Header End-->
+
+    <div class="container">
+
+      <!-- Timeline
+      ================================================= -->
+      <div class="timeline">
+        <div class="timeline-cover">
+
+          <!--Timeline Menu for Large Screens-->
+          <div class="timeline-nav-bar hidden-sm hidden-xs">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="profile-info">
+                  <img src="http://placehold.it/300x300" alt="" class="img-responsive profile-photo" />
+                  <h3>{{userName}}</h3>
+
+                </div>
+              </div>
+              <div class="col-md-9">
+                <ul class="list-inline profile-menu">
+                  <li><a href="#" class="active">Timeline</a></li>
+
+                  <li><a href="timeline-album.html">Album</a></li>
+                  <li><a href="timeline-friends.html">Followers</a></li>
+                </ul>
+                <ul class="follow-me list-inline">
+
+                  <li ng-if="isFollow"><button class="btn-primary" ng-click="UnFollow()">UnFollow</button></li>
+                  <li ng-if="!isFollow"><button class="btn-primary" ng-click="Follow()">Follow</button></li>
+                </ul>
+
+              </div>
+            </div>
+          </div><!--Timeline Menu for Large Screens End-->
+
+
+        </div>
+        <div id="page-contents">
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-7">
+
+              <!-- Post Create Box
+              ================================================= -->
+              <div class="create-post">
+                <div class="row">
+                  <div class="col-md-7 col-sm-7">
+                    <div class="form-group">
+                      <img src="http://placehold.it/300x300" alt="" class="profile-photo-md" />
+                      <textarea name="texts" id="exampleTextarea" cols="30" rows="1" class="form-control" placeholder="Write what you wish"></textarea>
+                    </div>
+                  </div>
+                  <div class="col-md-5 col-sm-5">
+                    <div class="tools">
+                      <ul class="publishing-tools list-inline">
+                        <li><a href="#"><i class="ion-compose"></i></a></li>
+                        <li><a href="#"><i class="ion-images"></i></a></li>
+                        <li><a href="#"><i class="ion-ios-videocam"></i></a></li>
+                        <li><a href="#"><i class="ion-map"></i></a></li>
+                      </ul>
+                      <button class="btn btn-primary pull-right">Publish</button>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- Post Create Box End-->
+
+              <!-- Post Content
+              ================================================= -->
+              <div class="post-content" ng-repeat="trip in trips">
+
+                <!--Post Date-->
+                <div class="post-date hidden-xs hidden-sm">
+                  <h5>{{trip.firstName}} {{trip.lastName}}</h5>
+                  <p class="text-grey">On {{trip.createdAt}}</p>
+                </div><!--Post Date End-->
+
+                <img src="http://placehold.it/1920x1280" alt="post-image" class="img-responsive post-image" />
+                <div class="post-container">
+
+                  <div class="post-detail">
+                    <div class="user-info">
+
+                      <h5><a href="/getTripDetailsPage?tripId={{trip.id}}" class="profile-link">{{trip.trip_name}}</a> </h5>
+
+                    </div>
+                    <div class="reaction">
+                      <a class="btn text-green" ng-class="{'text-green': trip.like_by_me, 'text-grey': !trip.like_by_me}"
+                         ng-click="likeTripontimeline(trip.like_by_me,trip.id)">
+                          <i class="icon ion-thumbsup"></i>{{trip.likes.length}}</a>
+
+                    </div>
+                    <div class="line-divider"></div>
+                    <div class="post-text">
+                      <p>{{trip.description}}</p>
+                    </div>
+                    <div class="line-divider"></div>
+                    <div class="post-comment" ng-repeat="comment in trip.comments">
+                      <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm" />
+                      <p><a href="timeline.html" class="profile-link">{{comment.firstName}} {{comment.lastName}}
+                          </a>{{comment.comment}}</p>
+                    </div>
+                      <div class="post-comment">
+                          <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm" />
+                          <input type="text" class="form-control" placeholder="Post a comment" ng-model="trip.cmt">
+                          <button class="btn btn-primary btn-xs" style="padding-left: 5px;padding-right: 5px;border-radius: 3px;margin-left: 5px;
+                    margin-top: 5px;margin-bottom: 7px" ng-click="postCommentontimeline(trip.id,trip.cmt)">Post</button>
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+            <div class="col-md-2 static">
+              <div id="sticky-sidebar">
+                <h4 class="grey">Sarah's activity</h4>
+                <div class="feed-item">
+                  <div class="live-activity">
+                    <p><a href="#" class="profile-link">Sarah</a> Commended on a Photo</p>
+                    <p class="text-muted">5 mins ago</p>
+                  </div>
+                </div>
+                <div class="feed-item">
+                  <div class="live-activity">
+                    <p><a href="#" class="profile-link">Sarah</a> Has posted a photo</p>
+                    <p class="text-muted">an hour ago</p>
+                  </div>
+                </div>
+                <div class="feed-item">
+                  <div class="live-activity">
+                    <p><a href="#" class="profile-link">Sarah</a> Liked her friend's post</p>
+                    <p class="text-muted">4 hours ago</p>
+                  </div>
+                </div>
+                <div class="feed-item">
+                  <div class="live-activity">
+                    <p><a href="#" class="profile-link">Sarah</a> has shared an album</p>
+                    <p class="text-muted">a day ago</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer
+    ================================================= -->
+    <% include footer.ejs %>
+    
+    <!--preloader-->
+    <div id="spinner-wrapper">
+      <div class="spinner"></div>
+    </div>
+
+    <!-- Scripts
+    ================================================= -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.sticky-kit.min.js"></script>
+    <script src="js/jquery.scrollbar.min.js"></script>
+    <script src="js/script.js"></script>
+
+  </body>
+</html>

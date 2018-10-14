@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Social Network for Travelers Student Project" />
+    <meta name="keywords" content="Social Network, Social Media, Travelers, NewsFeed" />
+    <meta name="robots" content="index, follow" />
+    <title>Trip Details </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtPt6pkaGugq1ToerK4NCDVyicJ211238"></script>
+    <script src="controller/newsfeed-controller.js"></script>
+
+    <!-- Stylesheets
+    ================================================= -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/ionicons.min.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link href="css/emoji.css" rel="stylesheet">
+    <link href="css/timeline.css" rel="stylesheet">
+
+    <!--Google Font-->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" type="image/png" href="images/fav.png"/>
+</head>
+<script>
+
+    window.trip_id ='<%=trip_id%>';
+
+
+
+</script>
+<body ng-app="newsfeed" ng-controller="newsfeedController" ng-init="getTripDetails()">
+
+
+<% include header.ejs %>
+
+<div id="page-contents">
+    <div class="container">
+        <div class="row">
+
+            <!-- Newsfeed Common Side Bar Left
+            ================================================= -->
+            <div class="col-md-3 static">
+                <div class="profile-card">
+                    <img src="http://placehold.it/300x300" alt="user" class="profile-photo" />
+                    <h4><a href="/edit-profile-basic-page" class="text-white">{{name}}</a></h4>
+
+                </div><!--profile card ends-->
+                <ul class="nav-news-feed">
+                    <li><i class="icon ion-ios-paper"></i><div><a href="/newsfeedpage">My Newsfeed</a></div></li>
+
+                    <li><i class="glyphicon glyphicon-th-list" style="color:darkturquoise; opacity: 0.5; font-size: 14px; margin-top: 5px">
+
+                        </i><div><a href="/mytimelinepage">My Timeline</a></div></li>
+                    <li><i class="glyphicon glyphicon-user" style="color:blueviolet; opacity: 0.5; font-size: 14px; margin-top: 5px">
+
+                        </i><div><a href="/edit-profile-basic-page">My Profile</a></div></li>
+                    <li><i class="icon ion-ios-people-outline"></i><div><a href="/myFollowers">Followers</a></div></li>
+
+                </ul><!--news-feed links ends-->
+            </div>
+
+            <div class="col-md-7">
+
+                <!-- Post Create Box
+                ================================================= -->
+                <div class="create-post">
+                    <div class="row">
+                        <div class="col-md-7 col-sm-7">
+                            <div class="form-group">
+                                <h3 style="font-weight: bold">{{trip.trip_name}}</h3>
+                                <h5  for="date-from" style="font-weight: bold; margin-top: 30px"> &nbsp;&nbsp;&nbsp;by
+                                    <a href="#">{{trip.firstName}} {{trip.lastName}}</a></h5>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-5" style="margin-top: 15px;text-align: right">
+                            <div class="tools">
+                                <p class="text-muted">Posted a Trip on {{trip.createdAt}} </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-6">
+                            <h5 for="date-from" style="font-weight: bold">From</h5>
+                            <label class="from-to">{{trip.source}}</label>
+                        </div>
+                        <div class="form-group col-xs-6">
+                            <h5 for="date-to" style="font-weight: bold">Destination</h5>
+                           <label class="from-to">{{trip.destination}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-xs-4">
+                            <h5 for="date-from" style="font-weight: bold">Trip Date</h5>
+                            <label class="from-to">{{trip.start_date}}</label>
+                        </div>
+                        <div class="form-group col-xs-4">
+                            <h5 for="date-to" style="font-weight: bold">Total Days</h5>
+                            <label class="from-to">{{trip.days}}</label>
+                        </div>
+                        <div class="form-group col-xs-4">
+                            <h5 for="date-to" style="font-weight: bold">Number of People</h5>
+                            <label class="from-to">{{trip.people}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>
+                            <h5 for="date-from" class="col-xs-12" style="font-weight: bold">Description</h5>
+                           <p style="padding-left: 10px">{{trip.description}}</p>
+                        </div>
+                    </div>
+                </div><!-- Post Create Box End-->
+
+
+                <div class="edit-profile-container places">
+                    <div class="block-title">
+                        <h4 class="blueBold"><i class="glyphicon glyphicon-picture" style="font-size:20px"></i>Places</h4>
+
+                    </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                                    <ol class="carousel-indicators">
+                                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                                        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                                    </ol>
+                                    <div class="carousel-inner">
+                                        <div class="item active">
+                                            <img src="http://placehold.it/1200x500/3498db/2980b9" alt="First slide">
+                                            <div class="carousel-caption">
+                                                <h3>
+                                                    First slide</h3>
+                                                <p>
+                                                    Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <img src="http://placehold.it/1200x500/9b59b6/8e44ad" alt="Second slide">
+                                            <div class="carousel-caption">
+                                                <h3>
+                                                    Second slide</h3>
+                                                <p>
+                                                    Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <img src="http://placehold.it/1200x500/34495e/2c3e50" alt="Third slide">
+                                            <div class="carousel-caption">
+                                                <h3>
+                                                    Third slide</h3>
+                                                <p>
+                                                    Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left"></span></a><a class="right carousel-control"
+                                                                                                     href="#carousel-example-generic" data-slide="next"><span class="glyphicon glyphicon-chevron-right">
+                        </span></a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    <div id="push">
+                    </div>
+                </div>
+
+                <div class="line" style="margin-top: 10px"></div>
+
+                <div class="edit-profile-container places">
+                    <div class="block-title">
+                        <h4 class="blueBold"><i class="glyphicon glyphicon-picture" style="font-size:20px"></i>TimeLine</h4>
+                    </div>
+
+                    <div class="each places">
+                     <h4>Day 1</h4>
+                        <div class="post-content" ng-repeat="place in places">
+
+                            <div class="user-info" style="margin-left: 3px;">
+                                <div class="col-md-8">
+                                <h4><a href="#" class="profile-link" style="margin-left: 20px; color: #8dc63f">{{place.place_name}}</a></h4>
+                                </div>
+                                <div class="col-md-4" style="text-align: right; margin-top: 5px">
+                                    <p class="text-muted">{{place.visit_date}}</p>
+                                </div>
+                            </div>
+
+                            <img src="http://placehold.it/1920x1280" alt="post-image" class="img-responsive post-image" />
+                            <div class="post-container">
+
+                                <div class="post-detail">
+
+                                    <div class="reaction">
+                                        <a class="btn text-green" ng-class="{'text-green': place.like_by_me, 'text-grey': !place.like_by_me}"
+                                           ng-click="likePlace(place.like_by_me,place.id)"><i class="icon ion-thumbsup"></i>{{place.likes.length}}</a>
+
+                                    </div>
+                                    <div class="line-divider"></div>
+                                    <div class="post-text" name="desc">
+                                        <p>{{place.description}}</p>
+                                    </div>
+                                    <div class="line-divider"></div>
+                                    <div class="post-comment" ng-repeat="comment in place.comments">
+                                        <img src="../{{comment.profile_pic}}" alt="" class="profile-photo-sm" />
+                                        <p><a href="#" class="profile-link">{{comment.firstName}} {{comment.lastName}} </a>{{comment.comment}}</p>
+                                    </div>
+
+                                    <div class="post-comment">
+                                        <img src="../{{comment.profile_pic}}" alt="" class="profile-photo-sm" />
+                                        <input type="text" class="form-control" placeholder="Post a comment" ng-model="place.cmt">
+                                        <button class="btn btn-primary btn-xs" style="padding-left: 5px;padding-right: 5px;border-radius: 3px;margin-left: 5px;
+                        margin-top: 5px;margin-bottom: 7px" ng-click="postPlaceComment(place.id,place.cmt)">Post</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="edit-profile-container places">
+                    <div id="map" style="height: 500px;width: 100%;margin: 0px;padding: 0px;">hello</div>
+                </div>
+
+
+
+
+
+                <!-- Post Content
+                ================================================= -->
+                <!-- Post Content
+                =================================================
+                <div class="post-content">
+                   <video class="post-video" controls> <source src="videos/1.mp4" type="video/mp4"> </video>
+                  <div class="post-container">
+                    <img src="http://placehold.it/300x300" alt="user" class="profile-photo-md pull-left" />
+                    <div class="post-detail">
+                      <div class="user-info">
+                        <h5><a href="timeline.html" class="profile-link">Sophia Lee</a> <span class="following">following</span></h5>
+                        <p class="text-muted">Updated her status about 33 mins ago</p>
+                      </div>
+                      <div class="reaction">
+                        <a class="btn text-green"><i class="icon ion-thumbsup"></i> 75</a>
+                        <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 8</a>
+                      </div>
+                      <div class="line-divider"></div>
+                      <div class="post-text">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+                      </div>
+                      <div class="line-divider"></div>
+                       <div class="post-comment">
+                        <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm" />
+                        <p><a href="timeline.html" class="profile-link">Olivia </a> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <i class="em em-anguished"></i> Ut enim ad minim veniam, quis nostrud </p>
+                      </div>
+                      <div class="post-comment">
+                        <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm" />
+                        <p><a href="timeline.html" class="profile-link">Sarah</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</p>
+                      </div>
+                      <div class="post-comment">
+                        <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm" />
+                        <p><a href="timeline.html" class="profile-link">Linda</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                      </div>
+                      <div class="post-comment">
+                        <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm" />
+                        <input type="text" class="form-control" placeholder="Post a comment">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                &lt;!&ndash; Post Content
+                ================================================= &ndash;&gt;
+                <div class="post-content">
+                  <div class="post-container">
+                    <img src="http://placehold.it/300x300" alt="user" class="profile-photo-md pull-left" />
+                    <div class="post-detail">
+                      <div class="user-info">
+                        <h5><a href="timeline.html" class="profile-link">Linda Lohan</a> <span class="following">following</span></h5>
+                        <p class="text-muted">Published a photo about 1 hour ago</p>
+                      </div>
+                      <div class="reaction">
+                        <a class="btn text-green"><i class="icon ion-thumbsup"></i> 23</a>
+                        <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 4</a>
+                      </div>
+                      <div class="line-divider"></div>
+                      <div class="post-text">
+                        <p><i class="em em-thumbsup"></i> <i class="em em-thumbsup"></i> Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
+                      </div>
+                      <div class="line-divider"></div>
+                      <div class="post-comment">
+                        <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm" />
+                        <p><a href="timeline.html" class="profile-link">Cris </a> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam <i class="em em-muscle"></i></p>
+                      </div>
+                      <div class="post-comment">
+                        <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm" />
+                        <input type="text" class="form-control" placeholder="Post a comment">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                &lt;!&ndash; Post Content
+                ================================================= &ndash;&gt;
+                <div class="post-content">
+                  <img src="http://placehold.it/2000x1300" alt="post-image" class="img-responsive post-image" />
+                  <div class="post-container">
+                    <img src="http://placehold.it/300x300" alt="user" class="profile-photo-md pull-left" />
+                    <div class="post-detail">
+                      <div class="user-info">
+                        <h5><a href="timeline.html" class="profile-link">John Doe</a> <span class="following">following</span></h5>
+                        <p class="text-muted">Published a photo about 2 hour ago</p>
+                      </div>
+                      <div class="reaction">
+                        <a class="btn text-green"><i class="icon ion-thumbsup"></i> 39</a>
+                        <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 2</a>
+                      </div>
+                      <div class="line-divider"></div>
+                      <div class="post-text">
+                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt</p>
+                      </div>
+                      <div class="line-divider"></div>
+                      <div class="post-comment">
+                        <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm" />
+                        <p><a href="timeline.html" class="profile-link">Brian </a>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. </p>
+                      </div>
+                      <div class="post-comment">
+                        <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm" />
+                        <p><a href="timeline.html" class="profile-link">Richard</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+                      </div>
+                      <div class="post-comment">
+                        <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm" />
+                        <input type="text" class="form-control" placeholder="Post a comment">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                &lt;!&ndash; Post Content
+                ================================================= &ndash;&gt;
+                <div class="post-content">
+                  <div class="google-maps">
+                    <div id="map" class="map"></div>
+                  </div>
+                  <div class="post-container">
+                    <img src="http://placehold.it/300x300" alt="user" class="profile-photo-md pull-left" />
+                    <div class="post-detail">
+                      <div class="user-info">
+                        <h5><a href="timeline.html" class="profile-link">Sophia Lee</a> <span class="following">following</span></h5>
+                        <p class="text-muted"><i class="icon ion-ios-location"></i> Went to Niagara Falls today</p>
+                      </div>
+                      <div class="reaction">
+                        <a class="btn text-green"><i class="icon ion-thumbsup"></i> 17</a>
+                        <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 0</a>
+                      </div>
+                      <div class="line-divider"></div>
+                      <div class="post-text">
+                        <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio.</p>
+                      </div>
+                      <div class="line-divider"></div>
+                      <div class="post-comment">
+                        <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm" />
+                        <p><a href="timeline.html" class="profile-link">Sarah </a>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. <i class="em em-blush"></i> <i class="em em-blush"></i> </p>
+                      </div>
+                      <div class="post-comment">
+                        <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm" />
+                        <input type="text" class="form-control" placeholder="Post a comment">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                &lt;!&ndash; Post Content
+                ================================================= &ndash;&gt;
+                <div class="post-content">
+                  <img src="http://placehold.it/1920x1160" alt="" class="img-responsive post-image" />
+                  <div class="post-container">
+                    <img src="http://placehold.it/300x300" alt="user" class="profile-photo-md pull-left" />
+                    <div class="post-detail">
+                      <div class="user-info">
+                        <h5><a href="timeline.html" class="profile-link">Anna Young</a> <span class="following">following</span></h5>
+                        <p class="text-muted">Published a photo about 4 hour ago</p>
+                      </div>
+                      <div class="reaction">
+                        <a class="btn text-green"><i class="icon ion-thumbsup"></i> 2</a>
+                        <a class="btn text-red"><i class="fa fa-thumbs-down"></i> 0</a>
+                      </div>
+                      <div class="line-divider"></div>
+                      <div class="post-text">
+                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit.</p>
+                      </div>
+                      <div class="line-divider"></div>
+                      <div class="post-comment">
+                        <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm" />
+                        <p><a href="timeline.html" class="profile-link">Julia </a>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.</p>
+                      </div>
+                      <div class="post-comment">
+                        <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm" />
+                        <input type="text" class="form-control" placeholder="Post a comment">
+                      </div>
+                    </div>
+                  </div>
+                </div>-->
+            </div>
+
+            <!-- Newsfeed Common Side Bar Right
+            ================================================= -->
+            <div class="col-md-2 static">
+                <div class="suggestions" id="sticky-sidebar">
+                    <h4 class="grey">Who to Follow</h4>
+                    <div class="follow-user">
+                        <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm pull-left" />
+                        <div>
+                            <h5><a href="timeline.html">Diana Amber</a></h5>
+                            <a href="#" class="text-green">Add friend</a>
+                        </div>
+                    </div>
+                    <div class="follow-user">
+                        <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm pull-left" />
+                        <div>
+                            <h5><a href="timeline.html">Cris Haris</a></h5>
+                            <a href="#" class="text-green">Add friend</a>
+                        </div>
+                    </div>
+                    <div class="follow-user">
+                        <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm pull-left" />
+                        <div>
+                            <h5><a href="timeline.html">Brian Walton</a></h5>
+                            <a href="#" class="text-green">Add friend</a>
+                        </div>
+                    </div>
+                    <div class="follow-user">
+                        <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm pull-left" />
+                        <div>
+                            <h5><a href="timeline.html">Olivia Steward</a></h5>
+                            <a href="#" class="text-green">Add friend</a>
+                        </div>
+                    </div>
+                    <div class="follow-user">
+                        <img src="http://placehold.it/300x300" alt="" class="profile-photo-sm pull-left" />
+                        <div>
+                            <h5><a href="timeline.html">Sophia Page</a></h5>
+                            <a href="#" class="text-green">Add friend</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer
+================================================= -->
+<% include footer.ejs %>
+
+<!--preloader-->
+<div id="spinner-wrapper">
+    <div class="spinner"></div>
+</div>
+
+<!-- Scripts
+================================================= -->
+<!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTMXfmDn0VlqWIyoOxK8997L-amWbUPiQ&callback=initMap"></script>-->
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.sticky-kit.min.js"></script>
+<script src="js/jquery.scrollbar.min.js"></script>
+<script src="js/script.js"></script>
+<script>
+
+</script>
+</body>
+
+</html>

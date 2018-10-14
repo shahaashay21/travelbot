@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Social Network for Travelers Student Project" />
+    <meta name="keywords" content="Social Network, Social Media, Travelers, NewsFeed" />
+    <meta name="robots" content="index, follow" />
+    <title>Trip Details </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- <script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtPt6pkaGugq1ToerK4NCDVyicJ211238"></script> -->
+    <script src="controller/newsfeed-controller.js"></script>
+
+    <!-- Stylesheets
+    ================================================= -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/ionicons.min.css" />
+    <link rel="stylesheet" href="css/font-awesome.min.css" />
+    <link href="css/emoji.css" rel="stylesheet">
+    <link href="css/timeline.css" rel="stylesheet">
+
+    <!--Google Font-->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!--Favicon-->
+    <link rel="shortcut icon" type="image/png" href="images/fav.png"/>
+</head>
+<script>
+
+    window.searchText ='<%=searchText%>';
+    console.log("from here: "+window.searchText);
+
+
+
+</script>
+<body ng-app="newsfeed" ng-controller="newsfeedController" ng-init="searchResults()">
+
+
+<% include header.ejs %>
+
+<div id="page-contents">
+    <div class="container">
+        <div class="row">
+
+            <!-- Newsfeed Common Side Bar Left
+            ================================================= -->
+            <div class="col-md-3 static">
+                <div class="profile-card">
+                    <img src="../{{profile_pic}}" alt="user" class="profile-photo" />
+                    <h4><a href="/edit-profile-basic-page" class="text-white">{{name}}</a></h4>
+
+                </div><!--profile card ends-->
+
+                <ul class="nav-news-feed">
+                    <li><i class="icon ion-ios-paper"></i><div><a href="/newsfeedpage">My Newsfeed</a></div></li>
+
+                    <li><i class="glyphicon glyphicon-th-list" style="color:darkturquoise; opacity: 0.5; font-size: 14px; margin-top: 5px">
+
+                        </i><div><a href="/mytimelinepage">My Timeline</a></div></li>
+                    <li><i class="glyphicon glyphicon-user" style="color:blueviolet; opacity: 0.5; font-size: 14px; margin-top: 5px">
+
+                        </i><div><a href="/edit-profile-basic-page">My Profile</a></div></li>
+                    <li><i class="icon ion-ios-people-outline"></i><div><a href="/myFollowers">Followers</a></div></li>
+
+                </ul><!--news-feed links ends-->
+            </div>
+
+
+            <div class="col-md-7">
+
+               <!--  Search Bar -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                          <form action = "/getSearchPage" method="GET" name = "search_form">
+                            <div id="custom-search-input">
+                                <div class="input-group col-md-12">
+                                    <input type="text" id="search_text" name = "search_text" class="form-control1 input-lg" placeholder="Search friends, photos, videos" value= '<%=searchText%>'/>
+                                    
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-info btn-lg" type="submit">
+                                            <i class="glyphicon glyphicon-search"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                          </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- Search Bar End -->
+
+                <!-- Radio Buttons -->
+                <div class="container center">
+                  <h4>Choose what to search</h4>
+                  <!-- <p>The form below contains three inline radio buttons:</p> -->
+                  
+                  <form>
+                    <input type="radio"
+                     ng-model="contact" value="people" ng-checked = "checkedPeople()" ng-click = "searchResults()">
+                    <label for="people" >People</label>
+
+                    <input type="radio" ng-model="contact" value="places" ng-click="searchPlaces()">
+                    <label for="places">Places</label>
+
+                    <input type="radio" ng-model="contact" value="trips"  ng-click="searchTrips()">
+                    <label for="trips">Trips</label>
+                  <!-- <tt>search = {{search.name | json}}</tt><br/> -->
+                  
+                  </form>
+                    
+                </div>
+
+                <!-- Radio buttons End -->
+
+                
+
+                <!-- Search Results -->
+
+                <div class="friend-list">
+                <div class="row">
+                <div ng-show = showPeople ng-repeat = "user in search_query">
+                <div class="col-md-6 col-sm-6">
+                  <div class="friend-card">
+                    <img src="http://placehold.it/1030x360" alt="profile-cover" class="img-responsive cover" />
+                    <div class="card-info">
+                      <img src={{user.profile_pic}} alt="user" class="profile-photo-lg" />
+                      <div class="friend-info">
+                        <a href="#" class="pull-right text-green"></a>
+                        <h5><a href="/getUserAboutPage?user_id={{user.id}}" class="profile-link">{{user.firstName}} {{user.lastName}}</a></h5>
+                        <!-- {{user.country}} -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+
+                <!-- <div class="friend-list">
+                <div class="row"> -->
+                <div ng-show = showPlaces ng-repeat = "place in final_search_place">
+                <div class="col-md-6 col-sm-6">
+                  <div class="friend-card" >
+                    <img src="http://placehold.it/1030x360" alt="profile-cover" class="img-responsive cover" />
+                    <div class="card-info">
+                      <img src="http://placehold.it/300x300" alt="user" class="profile-photo-lg" />
+                      <div class="friend-info">
+                        <h6 style="text-align: right; letter-spacing: 1.5">Created by: 
+                        <a href="/getUserAboutPage?user_id={{place.user_id}}" class="pull-right text-green">{{place.firstName}} {{place.lastName}}</a>
+                        <h5><a href="/getTripDetailsPage?tripId={{place.trip_id}}" class="profile-link">{{place.place_name | limitTo:15 }} </a> </a></h5>
+                        <p>{{place.description | limitTo: 35 }}</p>
+                        <a href="/getTripDetailsPage?tripId={{place.trip_id}}" class="pull-right text-green">Read More...</a>
+                      
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+
+                <!-- <div class="friend-list" ng-show="contact == 'trips'">
+                <div class="row"> -->
+                <div ng-show = showTrips ng-repeat = "trip in final_search">
+                <div class="col-md-6 col-sm-6">
+                  <div class="friend-card">
+                    <img src="http://placehold.it/1030x360" alt="profile-cover" class="img-responsive cover" />
+                      <div class="friend-info">
+                        <h6>From: <b>{{trip.source}}</b> To: <b>{{trip.destination | limitTo: 8}} </b> &nbsp; &nbsp; &nbsp; Created by: 
+                        <a href="/getUserAboutPage?user_id={{trip.user_id}}" class="pull-right text-green"> {{trip.firstName}} {{trip.lastName}}</a></h6>
+                        <h5><a href="/getTripDetailsPage?tripId={{trip.id}}" class="profile-link">{{trip.trip_name}}</a></h5>
+                        <p>{{trip.description | limitTo: 67 }}</p>
+                        <a href="/getTripDetailsPage?tripId={{trip.id}}" class="pull-right text-green">Read More...</a>
+                      
+                    </div>
+                  </div>
+                </div>
+                </div>
+
+                <!-- Search Results End -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include footer.ejs %>
+
+<!--preloader-->
+<div id="spinner-wrapper">
+    <div class="spinner"></div>
+</div>
+
+<!-- Scripts
+================================================= -->
+<!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCTMXfmDn0VlqWIyoOxK8997L-amWbUPiQ&callback=initMap"></script>-->
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/jquery.sticky-kit.min.js"></script>
+<script src="js/jquery.scrollbar.min.js"></script>
+<script src="js/script.js"></script>
+<script>
+
+
+
+</script>
+
+
+
+</body>
+
+</html>
