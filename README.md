@@ -39,7 +39,7 @@ Set local database credentials on two places
 
 Now run
 ```sh
-npm start
+node app.js
 ```
   
 Go back to travelbot
